@@ -6,13 +6,15 @@ import {
   Text,
   View,
 } from 'react-native';
+import LoginPage from './app/atomic/pages/LoginPage';
+import { theme } from './app/common/theme';
 
 function App(): React.JSX.Element {
 
   return (
-    <SafeAreaView >
+    <SafeAreaView style={{backgroundColor: theme.colors.appleGreen, height: '100%'}}>
     <View>
-      <Text>Hello</Text>
+      <LoginPage/>
     </View>
     </SafeAreaView>
   );

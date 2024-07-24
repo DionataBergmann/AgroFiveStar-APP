@@ -1,0 +1,13 @@
+overwrite: true
+schema: "https://agrofivestar-api.onrender.com/graphql" 
+documents: "app/**/*.graphql" 
+generates:
+  app/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false

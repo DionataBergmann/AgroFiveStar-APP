@@ -1,0 +1,21 @@
+query me {
+  me {
+    ...MeFields
+  }
+}
+
+fragment MeFields on User {
+  id
+  name
+  email
+}
+
+query getUsers($filter: UserFilter!, $paging: OffsetPaging) {
+  users(filter: $filter, paging: $paging) {
+    nodes {
+      id
+      name
+      CPF
+    }
+  }
+}

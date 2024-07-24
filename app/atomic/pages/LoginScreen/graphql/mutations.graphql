@@ -1,0 +1,13 @@
+mutation login($data: AuthInput!) {
+  loginUser(data: $data) {
+    user {
+      id
+      name
+      roles{
+        id
+        name
+      }
+    }
+    token
+  }
+}

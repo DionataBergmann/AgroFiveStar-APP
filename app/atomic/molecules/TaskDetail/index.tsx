@@ -26,7 +26,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ task, visible, onClose, onEdit,
     await onDelete(task.id);
     onClose();
   };
-console.log(task)
+
   return (
     <Modal visible={visible} transparent={true} animationType="fade" onRequestClose={onClose}>
       <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPressOut={onClose}>

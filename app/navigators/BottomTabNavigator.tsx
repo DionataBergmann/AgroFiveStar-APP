@@ -1,8 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../atomic/pages/HomeScreen';
-import ScheduleScreen from '../atomic/pages/ScheduleScreen';
+import ScheduleScreen from '../atomic/pages/TaskScreen';
 import ChatScreen from '../atomic/pages/ChatScreen';
 import ProfileScreen from '../atomic/pages/ProfileScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';

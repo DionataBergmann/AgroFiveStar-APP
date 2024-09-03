@@ -1,0 +1,12 @@
+query getTasks($filter: TaskFilter!, $sorting: [TaskSort!]! , $paging: OffsetPaging) {
+  tasks(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      date
+			createdAt
+			title
+			description
+			dayOfWeek
+    }
+  }
+}

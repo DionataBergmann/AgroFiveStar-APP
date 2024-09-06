@@ -2267,7 +2267,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', loginUser: { __typename?: 'AuthType', token: string, user: { __typename?: 'User', id: string, name: string, roles: Array<{ __typename?: 'RoleInputDTO', id: string, name?: RolesEnum | null }> } } };
+export type LoginMutation = { __typename?: 'Mutation', loginUser: { __typename?: 'AuthType', token: string, user: { __typename?: 'User', id: string, name: string, email: string, roles: Array<{ __typename?: 'RoleInputDTO', id: string, name?: RolesEnum | null }> } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2283,6 +2283,13 @@ export type GetUsersQueryVariables = Exact<{
 
 
 export type GetUsersQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name: string, CPF?: string | null }> } };
+
+export type UpdateOneUserMutationVariables = Exact<{
+  input: UpdateOneUserInput;
+}>;
+
+
+export type UpdateOneUserMutation = { __typename?: 'Mutation', updateOneUser: { __typename?: 'User', id: string, name: string, email: string } };
 
 export type CreateOneTaskMutationVariables = Exact<{
   input: CreateOneTaskInput;
@@ -2327,6 +2334,7 @@ export const LoginDocument = gql`
     user {
       id
       name
+      email
       roles {
         id
         name
@@ -2446,6 +2454,41 @@ export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const UpdateOneUserDocument = gql`
+    mutation updateOneUser($input: UpdateOneUserInput!) {
+  updateOneUser(input: $input) {
+    id
+    name
+    email
+  }
+}
+    `;
+export type UpdateOneUserMutationFn = Apollo.MutationFunction<UpdateOneUserMutation, UpdateOneUserMutationVariables>;
+
+/**
+ * __useUpdateOneUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneUserMutation, { data, loading, error }] = useUpdateOneUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneUserMutation, UpdateOneUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneUserMutation, UpdateOneUserMutationVariables>(UpdateOneUserDocument, options);
+      }
+export type UpdateOneUserMutationHookResult = ReturnType<typeof useUpdateOneUserMutation>;
+export type UpdateOneUserMutationResult = Apollo.MutationResult<UpdateOneUserMutation>;
+export type UpdateOneUserMutationOptions = Apollo.BaseMutationOptions<UpdateOneUserMutation, UpdateOneUserMutationVariables>;
 export const CreateOneTaskDocument = gql`
     mutation createOneTask($input: CreateOneTaskInput!) {
   createOneTask(input: $input) {

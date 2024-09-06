@@ -3,6 +3,7 @@ mutation login($data: AuthInput!) {
     user {
       id
       name
+      email
       roles{
         id
         name

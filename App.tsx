@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import client from './app/Apollo';
 import BottomTabNavigator from './app/navigators/BottomTabNavigator';
 import { ActivityIndicator, View } from 'react-native';
-import { theme } from './app/common/theme';
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +50,7 @@ function App(): React.JSX.Element {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast />
     </ApolloProvider>
   );
 }

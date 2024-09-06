@@ -20,7 +20,13 @@ const LoginScreen = () => {
     try {
       const result = await login(email, password);
       const token = result?.data?.loginUser?.token;
+      const userId = result?.data?.loginUser?.user?.id;
+      const userName = result?.data?.loginUser?.user?.name;
+      const userEmail = result?.data?.loginUser?.user?.email;
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('userId', userId);
+      await AsyncStorage.setItem('userName', userName);
+      await AsyncStorage.setItem('userEmail', userEmail);
       navigation.navigate('HomeTabs');
     } catch (err) {
       console.error("Login error:", err);

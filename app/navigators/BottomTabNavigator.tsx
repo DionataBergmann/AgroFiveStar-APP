@@ -2,13 +2,13 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../atomic/pages/HomeScreen';
 import ScheduleScreen from '../atomic/pages/TaskScreen';
-import ChatScreen from '../atomic/pages/ChatScreen';
 import ProfileScreen from '../atomic/pages/ProfileScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../common/theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomHeader from '../atomic/atoms/CustomHeader';
+import NotificationScreen from '../atomic/pages/NotificationScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,8 +36,8 @@ function BottomTabNavigator() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Tarefas') {
             iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Conversa') {
-            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
+          } else if (route.name === 'Notificações') {
+            iconName = focused ? 'notifications' : 'notifications-outline';
           } else if (route.name === 'Perfil') {
             iconName = focused ? 'person' : 'person-outline';
           }
@@ -58,7 +58,7 @@ function BottomTabNavigator() {
     >
       <Tab.Screen name="Início" component={HomeScreen} />
       <Tab.Screen name="Tarefas" component={ScheduleScreen} />
-      <Tab.Screen name="Conversa" component={ChatScreen} />
+      <Tab.Screen name="Notificações" component={NotificationScreen} />
       <Tab.Screen name="Perfil" component={ProfileWithLogout} />
     </Tab.Navigator>
   );

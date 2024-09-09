@@ -19,6 +19,13 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AddNotificationsToUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID']['input'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']['input']>;
+};
+
 export type AddRolesToUserInput = {
   /** The id of the record. */
   id: Scalars['ID']['input'];
@@ -77,6 +84,11 @@ export type CreateManyInventoriesInput = {
   inventories: Array<CreateInventoryInput>;
 };
 
+export type CreateManyNotificationsInput = {
+  /** Array of records to create */
+  notifications: Array<CreateNotificationInput>;
+};
+
 export type CreateManyProductionsInput = {
   /** Array of records to create */
   productions: Array<CreateProductionInput>;
@@ -97,6 +109,12 @@ export type CreateManyUsersInput = {
   users: Array<CreateUserInput>;
 };
 
+export type CreateNotificationInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateOneFileInput = {
   /** The record to create */
   file: CreateFileInput;
@@ -105,6 +123,11 @@ export type CreateOneFileInput = {
 export type CreateOneInventoryInput = {
   /** The record to create */
   inventory: CreateInventoryInput;
+};
+
+export type CreateOneNotificationInput = {
+  /** The record to create */
+  notification: CreateNotificationInput;
 };
 
 export type CreateOneProductionInput = {
@@ -185,6 +208,11 @@ export type DeleteManyInventoriesInput = {
   filter: InventoryDeleteFilter;
 };
 
+export type DeleteManyNotificationsInput = {
+  /** Filter to find records to delete */
+  filter: NotificationDeleteFilter;
+};
+
 export type DeleteManyProductionsInput = {
   /** Filter to find records to delete */
   filter: ProductionDeleteFilter;
@@ -222,6 +250,11 @@ export type DeleteOneFileInput = {
 };
 
 export type DeleteOneInventoryInput = {
+  /** The id of the record to delete. */
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteOneNotificationInput = {
   /** The id of the record to delete. */
   id: Scalars['ID']['input'];
 };
@@ -735,9 +768,11 @@ export type InventoryUpdateFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addNotificationsToUser: User;
   addRolesToUser: User;
   createManyFiles: Array<File>;
   createManyInventories: Array<Inventory>;
+  createManyNotifications: Array<Notification>;
   createManyProductions: Array<Production>;
   createManyStorages: Array<Storage>;
   createManyTasks: Array<Task>;
@@ -745,12 +780,14 @@ export type Mutation = {
   createOneField: Field;
   createOneFile: File;
   createOneInventory: Inventory;
+  createOneNotification: Notification;
   createOneProduction: Production;
   createOneStorage: Storage;
   createOneTask: Task;
   createOneUser: User;
   deleteManyFiles: DeleteManyResponse;
   deleteManyInventories: DeleteManyResponse;
+  deleteManyNotifications: DeleteManyResponse;
   deleteManyProductions: DeleteManyResponse;
   deleteManyStorages: DeleteManyResponse;
   deleteManyTasks: DeleteManyResponse;
@@ -758,6 +795,7 @@ export type Mutation = {
   deleteOneFieldAndForget: Field;
   deleteOneFile: FileDeleteResponse;
   deleteOneInventory: InventoryDeleteResponse;
+  deleteOneNotification: NotificationDeleteResponse;
   deleteOneProduction: ProductionDeleteResponse;
   deleteOneStorage: StorageDeleteResponse;
   deleteOneTask: TaskDeleteResponse;
@@ -769,6 +807,7 @@ export type Mutation = {
   removeFieldsFromProduction: Production;
   removeInventoriesFromField: Field;
   removeInventoriesFromStorage: Storage;
+  removeNotificationsFromUser: User;
   removeProductionsFromField: Field;
   removeRolesFromUser: User;
   removeStoragesFromInventory: Inventory;
@@ -777,11 +816,13 @@ export type Mutation = {
   setFieldsOnProduction: Production;
   setInventoriesOnField: Field;
   setInventoriesOnStorage: Storage;
+  setNotificationsOnUser: User;
   setProductionsOnField: Field;
   setRolesOnUser: User;
   setStoragesOnInventory: Inventory;
   updateManyFiles: UpdateManyResponse;
   updateManyInventories: UpdateManyResponse;
+  updateManyNotifications: UpdateManyResponse;
   updateManyProductions: UpdateManyResponse;
   updateManyStorages: UpdateManyResponse;
   updateManyTasks: UpdateManyResponse;
@@ -789,10 +830,16 @@ export type Mutation = {
   updateOneField: Field;
   updateOneFile: File;
   updateOneInventory: Inventory;
+  updateOneNotification: Notification;
   updateOneProduction: Production;
   updateOneStorage: Storage;
   updateOneTask: Task;
   updateOneUser: User;
+};
+
+
+export type MutationAddNotificationsToUserArgs = {
+  input: AddNotificationsToUserInput;
 };
 
 
@@ -808,6 +855,11 @@ export type MutationCreateManyFilesArgs = {
 
 export type MutationCreateManyInventoriesArgs = {
   input: CreateManyInventoriesInput;
+};
+
+
+export type MutationCreateManyNotificationsArgs = {
+  input: CreateManyNotificationsInput;
 };
 
 
@@ -847,6 +899,11 @@ export type MutationCreateOneInventoryArgs = {
 };
 
 
+export type MutationCreateOneNotificationArgs = {
+  input: CreateOneNotificationInput;
+};
+
+
 export type MutationCreateOneProductionArgs = {
   input: CreateOneProductionInput;
 };
@@ -874,6 +931,11 @@ export type MutationDeleteManyFilesArgs = {
 
 export type MutationDeleteManyInventoriesArgs = {
   input: DeleteManyInventoriesInput;
+};
+
+
+export type MutationDeleteManyNotificationsArgs = {
+  input: DeleteManyNotificationsInput;
 };
 
 
@@ -909,6 +971,11 @@ export type MutationDeleteOneFileArgs = {
 
 export type MutationDeleteOneInventoryArgs = {
   input: DeleteOneInventoryInput;
+};
+
+
+export type MutationDeleteOneNotificationArgs = {
+  input: DeleteOneNotificationInput;
 };
 
 
@@ -967,6 +1034,11 @@ export type MutationRemoveInventoriesFromStorageArgs = {
 };
 
 
+export type MutationRemoveNotificationsFromUserArgs = {
+  input: RemoveNotificationsFromUserInput;
+};
+
+
 export type MutationRemoveProductionsFromFieldArgs = {
   input: RemoveProductionsFromFieldInput;
 };
@@ -1007,6 +1079,11 @@ export type MutationSetInventoriesOnStorageArgs = {
 };
 
 
+export type MutationSetNotificationsOnUserArgs = {
+  input: SetNotificationsOnUserInput;
+};
+
+
 export type MutationSetProductionsOnFieldArgs = {
   input: SetProductionsOnFieldInput;
 };
@@ -1029,6 +1106,11 @@ export type MutationUpdateManyFilesArgs = {
 
 export type MutationUpdateManyInventoriesArgs = {
   input: UpdateManyInventoriesInput;
+};
+
+
+export type MutationUpdateManyNotificationsArgs = {
+  input: UpdateManyNotificationsInput;
 };
 
 
@@ -1069,6 +1151,11 @@ export type MutationUpdateOneInventoryArgs = {
 };
 
 
+export type MutationUpdateOneNotificationArgs = {
+  input: UpdateOneNotificationInput;
+};
+
+
 export type MutationUpdateOneProductionArgs = {
   input: UpdateOneProductionInput;
 };
@@ -1086,6 +1173,104 @@ export type MutationUpdateOneTaskArgs = {
 
 export type MutationUpdateOneUserArgs = {
   input: UpdateOneUserInput;
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  description: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type NotificationAggregateGroupBy = {
+  __typename?: 'NotificationAggregateGroupBy';
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
+};
+
+export type NotificationConnection = {
+  __typename?: 'NotificationConnection';
+  /** Array of nodes. */
+  nodes: Array<Notification>;
+  /** Paging information */
+  pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int']['output'];
+};
+
+export type NotificationCountAggregate = {
+  __typename?: 'NotificationCountAggregate';
+  description?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['Int']['output']>;
+  userId?: Maybe<Scalars['Int']['output']>;
+};
+
+export type NotificationDeleteFilter = {
+  and?: InputMaybe<Array<NotificationDeleteFilter>>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<NotificationDeleteFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
+};
+
+export type NotificationDeleteResponse = {
+  __typename?: 'NotificationDeleteResponse';
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
+};
+
+export type NotificationFilter = {
+  and?: InputMaybe<Array<NotificationFilter>>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<NotificationFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
+};
+
+export type NotificationMaxAggregate = {
+  __typename?: 'NotificationMaxAggregate';
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
+};
+
+export type NotificationMinAggregate = {
+  __typename?: 'NotificationMinAggregate';
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
+};
+
+export type NotificationSort = {
+  direction: SortDirection;
+  field: NotificationSortFields;
+  nulls?: InputMaybe<SortNulls>;
+};
+
+export enum NotificationSortFields {
+  Description = 'description',
+  Id = 'id',
+  Title = 'title',
+  UserId = 'userId'
+}
+
+export type NotificationUpdateFilter = {
+  and?: InputMaybe<Array<NotificationUpdateFilter>>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<NotificationUpdateFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
 };
 
 export type NumberFieldComparison = {
@@ -1278,6 +1463,8 @@ export type Query = {
   inventories: InventoryConnection;
   inventory?: Maybe<Inventory>;
   me: User;
+  notification?: Maybe<Notification>;
+  notifications: NotificationConnection;
   production?: Maybe<Production>;
   productions: ProductionConnection;
   role?: Maybe<Role>;
@@ -1339,6 +1526,18 @@ export type QueryInventoriesArgs = {
 
 export type QueryInventoryArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryNotificationArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryNotificationsArgs = {
+  filter?: NotificationFilter;
+  paging?: OffsetPaging;
+  sorting?: Array<NotificationSort>;
 };
 
 
@@ -1434,6 +1633,13 @@ export type RemoveInventoriesFromStorageInput = {
   id: Scalars['ID']['input'];
   /** The id of relation. */
   relationId: Scalars['ID']['input'];
+};
+
+export type RemoveNotificationsFromUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID']['input'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']['input']>;
 };
 
 export type RemoveProductionsFromFieldInput = {
@@ -1616,6 +1822,13 @@ export type SetInventoriesOnStorageInput = {
   id: Scalars['ID']['input'];
   /** The id of relation. */
   relationId: Scalars['ID']['input'];
+};
+
+export type SetNotificationsOnUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID']['input'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']['input']>;
 };
 
 export type SetProductionsOnFieldInput = {
@@ -2035,6 +2248,13 @@ export type UpdateManyInventoriesInput = {
   update: UpdateInventoryInput;
 };
 
+export type UpdateManyNotificationsInput = {
+  /** Filter used to find fields to update */
+  filter: NotificationUpdateFilter;
+  /** The update to apply to all records found using the filter */
+  update: UpdateNotificationInput;
+};
+
 export type UpdateManyProductionsInput = {
   /** Filter used to find fields to update */
   filter: ProductionUpdateFilter;
@@ -2069,6 +2289,13 @@ export type UpdateManyUsersInput = {
   update: UpdateUserInput;
 };
 
+export type UpdateNotificationInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateOneFieldSubscriptionFilterInput = {
   /** Specify to filter the records returned. */
   filter: FieldSubscriptionFilter;
@@ -2086,6 +2313,13 @@ export type UpdateOneInventoryInput = {
   id: Scalars['ID']['input'];
   /** The update to apply. */
   update: UpdateInventoryInput;
+};
+
+export type UpdateOneNotificationInput = {
+  /** The id of the record to update */
+  id: Scalars['ID']['input'];
+  /** The update to apply. */
+  update: UpdateNotificationInput;
 };
 
 export type UpdateOneProductionInput = {
@@ -2154,8 +2388,15 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  notifications: Array<Notification>;
   roles: Array<RoleInputDto>;
   telephone?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type UserNotificationsArgs = {
+  filter?: NotificationFilter;
+  sorting?: Array<NotificationSort>;
 };
 
 
@@ -2168,6 +2409,7 @@ export type UserAggregateGroupBy = {
   __typename?: 'UserAggregateGroupBy';
   CPF?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   telephone?: Maybe<Scalars['String']['output']>;
 };
@@ -2186,6 +2428,7 @@ export type UserCountAggregate = {
   __typename?: 'UserCountAggregate';
   CPF?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['Int']['output']>;
   telephone?: Maybe<Scalars['Int']['output']>;
 };
@@ -2194,6 +2437,7 @@ export type UserDeleteFilter = {
   CPF?: InputMaybe<StringFieldComparison>;
   and?: InputMaybe<Array<UserDeleteFilter>>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserDeleteFilter>>;
   telephone?: InputMaybe<StringFieldComparison>;
@@ -2212,10 +2456,21 @@ export type UserFilter = {
   CPF?: InputMaybe<StringFieldComparison>;
   and?: InputMaybe<Array<UserFilter>>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  notifications?: InputMaybe<UserFilterNotificationFilter>;
   or?: InputMaybe<Array<UserFilter>>;
   roles?: InputMaybe<UserFilterRoleInputDtoFilter>;
   telephone?: InputMaybe<StringFieldComparison>;
+};
+
+export type UserFilterNotificationFilter = {
+  and?: InputMaybe<Array<UserFilterNotificationFilter>>;
+  description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserFilterNotificationFilter>>;
+  title?: InputMaybe<StringFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
 };
 
 export type UserFilterRoleInputDtoFilter = {
@@ -2228,6 +2483,7 @@ export type UserMaxAggregate = {
   __typename?: 'UserMaxAggregate';
   CPF?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   telephone?: Maybe<Scalars['String']['output']>;
 };
@@ -2236,6 +2492,7 @@ export type UserMinAggregate = {
   __typename?: 'UserMinAggregate';
   CPF?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   telephone?: Maybe<Scalars['String']['output']>;
 };
@@ -2249,6 +2506,7 @@ export type UserSort = {
 export enum UserSortFields {
   Cpf = 'CPF',
   Email = 'email',
+  Id = 'id',
   Name = 'name',
   Telephone = 'telephone'
 }
@@ -2257,6 +2515,7 @@ export type UserUpdateFilter = {
   CPF?: InputMaybe<StringFieldComparison>;
   and?: InputMaybe<Array<UserUpdateFilter>>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserUpdateFilter>>;
   telephone?: InputMaybe<StringFieldComparison>;
@@ -2283,6 +2542,14 @@ export type GetUsersQueryVariables = Exact<{
 
 
 export type GetUsersQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name: string, CPF?: string | null }> } };
+
+export type GetNotificationsQueryVariables = Exact<{
+  filter: NotificationFilter;
+  paging?: InputMaybe<OffsetPaging>;
+}>;
+
+
+export type GetNotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', nodes: Array<{ __typename?: 'Notification', id: string, title: string, description: string, userId: string }> } };
 
 export type UpdateOneUserMutationVariables = Exact<{
   input: UpdateOneUserInput;
@@ -2454,6 +2721,52 @@ export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetNotificationsDocument = gql`
+    query getNotifications($filter: NotificationFilter!, $paging: OffsetPaging) {
+  notifications(filter: $filter, paging: $paging) {
+    nodes {
+      id
+      title
+      description
+      userId
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotificationsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useGetNotificationsQuery(baseOptions: Apollo.QueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables> & ({ variables: GetNotificationsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+      }
+export function useGetNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        }
+export function useGetNotificationsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNotificationsQuery, GetNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotificationsQuery, GetNotificationsQueryVariables>(GetNotificationsDocument, options);
+        }
+export type GetNotificationsQueryHookResult = ReturnType<typeof useGetNotificationsQuery>;
+export type GetNotificationsLazyQueryHookResult = ReturnType<typeof useGetNotificationsLazyQuery>;
+export type GetNotificationsSuspenseQueryHookResult = ReturnType<typeof useGetNotificationsSuspenseQuery>;
+export type GetNotificationsQueryResult = Apollo.QueryResult<GetNotificationsQuery, GetNotificationsQueryVariables>;
 export const UpdateOneUserDocument = gql`
     mutation updateOneUser($input: UpdateOneUserInput!) {
   updateOneUser(input: $input) {

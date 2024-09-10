@@ -165,7 +165,9 @@ export type CreateTaskInput = {
   date: Scalars['DateTime']['input'];
   dayOfWeek?: InputMaybe<Scalars['Float']['input']>;
   description: Scalars['String']['input'];
+  status?: TaskStatus;
   title: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
   userName?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -811,6 +813,7 @@ export type Mutation = {
   removeProductionsFromField: Field;
   removeRolesFromUser: User;
   removeStoragesFromInventory: Inventory;
+  removeUserFromTask: Task;
   setFieldImageOnField: Field;
   setFieldsOnInventory: Inventory;
   setFieldsOnProduction: Production;
@@ -820,6 +823,7 @@ export type Mutation = {
   setProductionsOnField: Field;
   setRolesOnUser: User;
   setStoragesOnInventory: Inventory;
+  setUserOnTask: Task;
   updateManyFiles: UpdateManyResponse;
   updateManyInventories: UpdateManyResponse;
   updateManyNotifications: UpdateManyResponse;
@@ -1054,6 +1058,11 @@ export type MutationRemoveStoragesFromInventoryArgs = {
 };
 
 
+export type MutationRemoveUserFromTaskArgs = {
+  input: RemoveUserFromTaskInput;
+};
+
+
 export type MutationSetFieldImageOnFieldArgs = {
   input: SetFieldImageOnFieldInput;
 };
@@ -1096,6 +1105,11 @@ export type MutationSetRolesOnUserArgs = {
 
 export type MutationSetStoragesOnInventoryArgs = {
   input: SetStoragesOnInventoryInput;
+};
+
+
+export type MutationSetUserOnTaskArgs = {
+  input: SetUserOnTaskInput;
 };
 
 
@@ -1663,6 +1677,13 @@ export type RemoveStoragesFromInventoryInput = {
   relationId: Scalars['ID']['input'];
 };
 
+export type RemoveUserFromTaskInput = {
+  /** The id of the record. */
+  id: Scalars['ID']['input'];
+  /** The id of relation. */
+  relationId: Scalars['ID']['input'];
+};
+
 export type Role = {
   __typename?: 'Role';
   createdAt: Scalars['DateTime']['output'];
@@ -1846,6 +1867,13 @@ export type SetRolesOnUserInput = {
 };
 
 export type SetStoragesOnInventoryInput = {
+  /** The id of the record. */
+  id: Scalars['ID']['input'];
+  /** The id of relation. */
+  relationId: Scalars['ID']['input'];
+};
+
+export type SetUserOnTaskInput = {
   /** The id of the record. */
   id: Scalars['ID']['input'];
   /** The id of relation. */
@@ -2057,8 +2085,11 @@ export type Task = {
   deletedAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  status: TaskStatus;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+  user?: Maybe<User>;
+  userId?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2070,8 +2101,10 @@ export type TaskAggregateGroupBy = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<TaskStatus>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2098,8 +2131,10 @@ export type TaskCountAggregate = {
   deletedAt?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  status?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['Int']['output']>;
   updatedAt?: Maybe<Scalars['Int']['output']>;
+  userId?: Maybe<Scalars['Int']['output']>;
   userName?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -2112,8 +2147,10 @@ export type TaskDeleteFilter = {
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<TaskDeleteFilter>>;
+  status?: InputMaybe<TaskStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
   userName?: InputMaybe<StringFieldComparison>;
 };
 
@@ -2125,8 +2162,10 @@ export type TaskDeleteResponse = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<TaskStatus>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2139,9 +2178,22 @@ export type TaskFilter = {
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<TaskFilter>>;
+  status?: InputMaybe<TaskStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  user?: InputMaybe<TaskFilterUserFilter>;
+  userId?: InputMaybe<StringFieldComparison>;
   userName?: InputMaybe<StringFieldComparison>;
+};
+
+export type TaskFilterUserFilter = {
+  CPF?: InputMaybe<StringFieldComparison>;
+  and?: InputMaybe<Array<TaskFilterUserFilter>>;
+  email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<TaskFilterUserFilter>>;
+  telephone?: InputMaybe<StringFieldComparison>;
 };
 
 export type TaskMaxAggregate = {
@@ -2152,8 +2204,10 @@ export type TaskMaxAggregate = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<TaskStatus>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2165,8 +2219,10 @@ export type TaskMinAggregate = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<TaskStatus>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId?: Maybe<Scalars['String']['output']>;
   userName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2183,10 +2239,34 @@ export enum TaskSortFields {
   DeletedAt = 'deletedAt',
   Description = 'description',
   Id = 'id',
+  Status = 'status',
   Title = 'title',
   UpdatedAt = 'updatedAt',
+  UserId = 'userId',
   UserName = 'userName'
 }
+
+export enum TaskStatus {
+  Done = 'DONE',
+  Pending = 'PENDING'
+}
+
+export type TaskStatusFilterComparison = {
+  eq?: InputMaybe<TaskStatus>;
+  gt?: InputMaybe<TaskStatus>;
+  gte?: InputMaybe<TaskStatus>;
+  iLike?: InputMaybe<TaskStatus>;
+  in?: InputMaybe<Array<TaskStatus>>;
+  is?: InputMaybe<Scalars['Boolean']['input']>;
+  isNot?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<TaskStatus>;
+  lt?: InputMaybe<TaskStatus>;
+  lte?: InputMaybe<TaskStatus>;
+  neq?: InputMaybe<TaskStatus>;
+  notILike?: InputMaybe<TaskStatus>;
+  notIn?: InputMaybe<Array<TaskStatus>>;
+  notLike?: InputMaybe<TaskStatus>;
+};
 
 export type TaskSumAggregate = {
   __typename?: 'TaskSumAggregate';
@@ -2202,8 +2282,10 @@ export type TaskUpdateFilter = {
   description?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<TaskUpdateFilter>>;
+  status?: InputMaybe<TaskStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
+  userId?: InputMaybe<StringFieldComparison>;
   userName?: InputMaybe<StringFieldComparison>;
 };
 
@@ -2368,7 +2450,9 @@ export type UpdateTaskInput = {
   dayOfWeek?: InputMaybe<Scalars['Float']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  status?: InputMaybe<TaskStatus>;
   title?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
   userName?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2580,13 +2664,13 @@ export type DeleteOneTaskMutationVariables = Exact<{
 export type DeleteOneTaskMutation = { __typename?: 'Mutation', deleteOneTask: { __typename?: 'TaskDeleteResponse', id?: string | null } };
 
 export type GetTasksQueryVariables = Exact<{
-  filter: TaskFilter;
-  sorting: Array<TaskSort> | TaskSort;
+  filter?: InputMaybe<TaskFilter>;
+  sorting?: InputMaybe<Array<TaskSort> | TaskSort>;
   paging?: InputMaybe<OffsetPaging>;
 }>;
 
 
-export type GetTasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', nodes: Array<{ __typename?: 'Task', id: string, date: any, createdAt: any, title: string, description: string, dayOfWeek?: number | null }> } };
+export type GetTasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', nodes: Array<{ __typename?: 'Task', id: string, date: any, createdAt: any, title: string, description: string, dayOfWeek?: number | null, status: TaskStatus }> } };
 
 export const MeFieldsFragmentDoc = gql`
     fragment MeFields on User {
@@ -2902,7 +2986,7 @@ export type DeleteOneTaskMutationHookResult = ReturnType<typeof useDeleteOneTask
 export type DeleteOneTaskMutationResult = Apollo.MutationResult<DeleteOneTaskMutation>;
 export type DeleteOneTaskMutationOptions = Apollo.BaseMutationOptions<DeleteOneTaskMutation, DeleteOneTaskMutationVariables>;
 export const GetTasksDocument = gql`
-    query getTasks($filter: TaskFilter!, $sorting: [TaskSort!]!, $paging: OffsetPaging) {
+    query getTasks($filter: TaskFilter, $sorting: [TaskSort!], $paging: OffsetPaging) {
   tasks(filter: $filter, sorting: $sorting, paging: $paging) {
     nodes {
       id
@@ -2911,6 +2995,7 @@ export const GetTasksDocument = gql`
       title
       description
       dayOfWeek
+      status
     }
   }
 }
@@ -2934,7 +3019,7 @@ export const GetTasksDocument = gql`
  *   },
  * });
  */
-export function useGetTasksQuery(baseOptions: Apollo.QueryHookOptions<GetTasksQuery, GetTasksQueryVariables> & ({ variables: GetTasksQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetTasksQuery(baseOptions?: Apollo.QueryHookOptions<GetTasksQuery, GetTasksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetTasksQuery, GetTasksQueryVariables>(GetTasksDocument, options);
       }

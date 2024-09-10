@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ActivityIndicator, Modal, TouchableOpacity, Text } from 'react-native';
-import { SortDirection, TaskSortFields, useGetTasksQuery } from '../../../generated/graphql';
+import { CreateTaskInput, SortDirection, TaskSortFields, useGetTasksQuery } from '../../../generated/graphql';
 import useDeleteOneTask from './hooks/useDeleteOneTask';
 import useCreateOneTask from './hooks/useCreateOneTask';
 import Schedule from '../../organism/TaskSchedule';
@@ -8,19 +8,39 @@ import CreateTaskForm from '../../molecules/CreateTaskForm';
 import TaskDetail from '../../molecules/TaskDetail';
 import { theme } from '../../../common/theme';
 import useUpdateOneTask from './hooks/useUpdateOneTask';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TaskScreen = () => {
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedTask, setSelectedTask] = useState<CreateTaskInput>();
   const [selectedDay, setSelectedDay] = useState(new Date().toISOString().split('T')[0]);
   const [isCreateTaskVisible, setCreateTaskVisible] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const { deleteTask } = useDeleteOneTask();
   const { createTask } = useCreateOneTask();
   const { updateTask } = useUpdateOneTask()
 
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('userId');
+        setUserId(storedUserId);
+      } catch (error) {
+        console.error('Failed to load user data:', error);
+      }
+    };
+
+    getUserData();
+  }, []);
+
   const { data, loading, refetch } = useGetTasksQuery({
     variables: {
-      filter: { date: { eq: selectedDay } },
+      filter: {
+        and: [
+          { date: { eq: selectedDay } },
+          { userId: { eq: userId } }
+        ]
+      },
       sorting: { direction: SortDirection.Desc, field: TaskSortFields.Date },
       paging: { limit: 50 }
     }
@@ -41,15 +61,15 @@ const TaskScreen = () => {
   };
 
   const handleEditTask = () => {
-    setCreateTaskVisible(true); 
+    setCreateTaskVisible(true);
   };
 
   const handleFormSubmit = async (formData) => {
     try {
       if (selectedTask) {
-        await updateTask(selectedTask.id, formData); 
+        await updateTask(selectedTask.id, formData);
       } else {
-        await createTask(formData); 
+        await createTask(formData, userId);
       }
       setSelectedTask(null);
       await refetch();

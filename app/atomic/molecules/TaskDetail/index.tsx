@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { theme } from '../../../common/theme';
 import DeleteConfirmationModal from '../../atoms/DeleteConfirmationModal';
-import { Task } from '../../../generated/graphql';
+import { Task, TaskStatus } from '../../../generated/graphql';
 
 interface TaskDetailProps {
   visible: boolean;
@@ -11,7 +11,7 @@ interface TaskDetailProps {
   task: Task;
   onEdit: () => void;
   onDelete: (id: string) => Promise<void>;
-  onComplete: () => void;
+  onComplete:(id: string, status: TaskStatus) => Promise<void>
 }
 
 const TaskDetail: React.FC<TaskDetailProps> = ({ task, visible, onClose, onEdit, onDelete, onComplete }) => {
@@ -33,7 +33,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ task, visible, onClose, onEdit,
         <TouchableOpacity style={styles.card} activeOpacity={1}>
           <View style={styles.header}>
             <Ionicons name="time-outline" size={20} color="white" />
-            <Text style={styles.statusText}>Tarefa pendente</Text>
+            <Text style={styles.statusText}>{task.status === TaskStatus?.Done ? 'Tarefa concluída ✔r' :  'Tarefa pendente'}</Text>
             <View style={styles.actions}>
               <TouchableOpacity onPress={handleDeletePress} style={styles.actionButton}>
                 <Ionicons name="trash-outline" size={20} color="white" />
@@ -46,7 +46,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ task, visible, onClose, onEdit,
           <Text style={styles.title}>{task.title}</Text>
           <Text style={styles.description}>{task.description}</Text>
           <TouchableOpacity onPress={onComplete} style={styles.completeButton}>
-            <Text style={styles.completeButtonText}>Marcar como concluída</Text>
+            <Text style={styles.completeButtonText}>Marcar como {task.status === TaskStatus?.Done ? 'pendente' :  'concluída'}</Text>
           </TouchableOpacity>
         </TouchableOpacity>
       </TouchableOpacity>

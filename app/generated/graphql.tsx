@@ -2654,7 +2654,7 @@ export type UpdateOneTaskMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOneTaskMutation = { __typename?: 'Mutation', updateOneTask: { __typename?: 'Task', id: string } };
+export type UpdateOneTaskMutation = { __typename?: 'Mutation', updateOneTask: { __typename?: 'Task', id: string, status: TaskStatus } };
 
 export type DeleteOneTaskMutationVariables = Exact<{
   input: DeleteOneTaskInput;
@@ -2923,6 +2923,7 @@ export const UpdateOneTaskDocument = gql`
     mutation updateOneTask($input: UpdateOneTaskInput!) {
   updateOneTask(input: $input) {
     id
+    status
   }
 }
     `;

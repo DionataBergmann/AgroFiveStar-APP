@@ -5,10 +5,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { theme } from '../../../common/theme';
 import { ptBR } from 'date-fns/locale';
+import { TaskStatus } from '../../../generated/graphql';
+import useUpdateOneTask from '../../pages/TaskScreen/hooks/useUpdateOneTask';
 
 const CustomSchedule = ({ tasks, onDayPress, onTaskPress }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isCalendarVisible, setCalendarVisible] = useState(false);
+  const { updateTaskStatus } = useUpdateOneTask()
 
   const daysArray = Array.from({ length: 7 }, (_, i) =>
     addDays(subDays(selectedDate, 3), i)
@@ -27,11 +30,22 @@ const CustomSchedule = ({ tasks, onDayPress, onTaskPress }) => {
     const currentDate = selectedDate || date;
     setCalendarVisible(false);
     setSelectedDate(currentDate);
-    onDayPress(currentDate); 
+    onDayPress(currentDate);
   };
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const handleChangeTaskStatus = async (id, currentStatus) => {
+    const newStatus = currentStatus === TaskStatus.Pending ? TaskStatus.Done : TaskStatus.Pending;
+
+    try {
+      await updateTaskStatus(id, newStatus);
+
+    } catch (e) {
+      console.error('Erro ao atualizar o status da tarefa:', e);
+    }
   };
 
   const renderDayItem = ({ item }) => {
@@ -69,8 +83,19 @@ const CustomSchedule = ({ tasks, onDayPress, onTaskPress }) => {
         {filteredTasks.length > 0 ? (
           filteredTasks.map(task => (
             <TouchableOpacity key={task.id} style={styles.taskItem} onPress={() => onTaskPress(task)}>
-              <Text style={styles.taskTitle}>{task.title}</Text>
-              <Text style={styles.taskDescription}>{task.description}</Text>
+              <View style={styles.taskContent}>
+                <View>
+                  <Text style={styles.taskTitle}>{task.title}</Text>
+                  <Text style={styles.taskDescription}>{task.description}</Text>
+                </View>
+                <TouchableOpacity onPress={() => handleChangeTaskStatus(task.id, task.status)}>
+                  {task.status === TaskStatus.Done ? (
+                    <Ionicons name="checkmark-circle-outline" size={24} color="green" />
+                  ) : (
+                    <Ionicons name="radio-button-off-outline" size={24} color="gray" />
+                  )}
+                </TouchableOpacity>
+              </View>
             </TouchableOpacity>
           ))
         ) : (
@@ -98,6 +123,12 @@ const styles = StyleSheet.create({
   },
   calendarIcon: {
     paddingRight: 5,
+  },
+  taskContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
   },
   daysContainer: {
     flexDirection: 'row',

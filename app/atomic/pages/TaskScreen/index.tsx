@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ActivityIndicator, Modal, TouchableOpacity, Text } from 'react-native';
-import { CreateTaskInput, SortDirection, TaskSortFields, useGetTasksQuery } from '../../../generated/graphql';
+import { CreateTaskInput, SortDirection, TaskSortFields, TaskStatus, useGetTasksQuery } from '../../../generated/graphql';
 import useDeleteOneTask from './hooks/useDeleteOneTask';
 import useCreateOneTask from './hooks/useCreateOneTask';
 import Schedule from '../../organism/TaskSchedule';
@@ -18,7 +18,7 @@ const TaskScreen = () => {
 
   const { deleteTask } = useDeleteOneTask();
   const { createTask } = useCreateOneTask();
-  const { updateTask } = useUpdateOneTask()
+  const { updateTask, updateTaskStatus } = useUpdateOneTask()
 
   useEffect(() => {
     const getUserData = async () => {
@@ -53,6 +53,18 @@ const TaskScreen = () => {
       refetch();
     } catch (e) {
       console.error('Error deleting task:', e);
+    }
+  };
+
+  const handleChangeTaskStatus = async (id, currentStatus) => {
+    const newStatus = currentStatus === TaskStatus.Pending ? TaskStatus.Done : TaskStatus.Pending;
+  
+    try {
+      await updateTaskStatus(id, newStatus);
+      refetch(); 
+      setSelectedTask(null);
+    } catch (e) {
+      console.error('Erro ao atualizar o status da tarefa:', e);
     }
   };
 
@@ -99,12 +111,12 @@ const TaskScreen = () => {
 
       {selectedTask && (
         <TaskDetail
-          visible={!!selectedTask}
+          visible={!!selectedTask }
           onClose={() => setSelectedTask(null)}
           task={selectedTask}
           onEdit={handleEditTask}
           onDelete={handleDeleteTask}
-          onComplete={() => { /* Implement complete logic */ }}
+          onComplete={() => handleChangeTaskStatus(selectedTask.id, selectedTask.status)}
         />
       )}
 

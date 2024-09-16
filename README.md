@@ -1,7 +1,7 @@
 # Changed name to Farm Assist
 Farm Assist is a mobile application built with React Native. This project aims to provide users who are employees on a farm with a seamless way to manage and visualize their daily tasks efficiently. It includes features such as creating tasks via the web system managed by the owner, as well as creating tasks by the employee themselves and viewing reports on the progress of the tasks.
 
-[YouTube Video](https://www.youtube.com/watch?v=oWS95xwK558)
+[YouTube Video](https://www.youtube.com/watch?v=4AeBKZ2KxrE)
 
 # Getting Started
 

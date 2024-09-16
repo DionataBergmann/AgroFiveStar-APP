@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.19.0'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Instalar dependências
-        run: npm install
+        run: yarn install
 
       - name: Executar build
-        run: npm run build
+        run: yarn build
 
       - name: Executar testes
-        run: npm test
+        run: yarn test

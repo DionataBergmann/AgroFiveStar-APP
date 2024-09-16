@@ -1,4 +1,6 @@
-import '@react-native-async-storage/async-storage/jest/async-storage-mock';
+if (global.__TEST__) {
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock');
+}
 
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';

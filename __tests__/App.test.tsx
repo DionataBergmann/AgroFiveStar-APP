@@ -1,17 +1,17 @@
-/**
- * @format
- */
-
-import 'react-native';
+import '@react-native-async-storage/async-storage/jest/async-storage-mock';
 import React from 'react';
 import App from '../App';
+import { render, waitFor } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Note: import explicitly to use the types shipped with jest.
-import { it } from '@jest/globals';
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(),
+}));
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+it('renders correctly', async () => {
+  AsyncStorage.getItem.mockResolvedValueOnce('mocked-token');
 
-it('renders correctly', () => {
-  renderer.create(<App />);
+  await waitFor(() => {
+    render(<App />);
+  });
 });

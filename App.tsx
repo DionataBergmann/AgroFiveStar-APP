@@ -1,3 +1,5 @@
+import '@react-native-async-storage/async-storage/jest/async-storage-mock';
+
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

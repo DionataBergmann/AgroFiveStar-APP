@@ -77,7 +77,7 @@ const MountainProgress = ({ completionPercentage }: { completionPercentage: numb
         />
       </Svg>
 
-      <Text style={styles.label}>Progresso: {completionPercentage}%</Text>
+      <Text style={styles.label} testID="home-screen">Progresso: {completionPercentage}%</Text>
     </View>
   );
 };
